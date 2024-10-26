@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Поставщики</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+<header>
+<h1>Управление поставщиками</h1>
+<nav>
+<ul>
+<li><a href="products.html">Товары</a></li>
+<li><a href="suppliers.html">Поставщики</a></li>
+</ul>
+</nav>
+</header>
+
+<div id="content">
+<h2>Список поставщиков</h2>
+<div id="supplierList" class="card-container"></div>
+
+<!-- Форма добавления поставщика -->
+<h2>Добавить поставщика</h2>
+<form id="supplierForm" onsubmit="addSupplier(event)">
+<input type="text" id="supplierName" placeholder="Название поставщика" required />
+<input type="text" id="supplierContactInfo" placeholder="Контактная информация" required />
+<button type="submit">Добавить поставщика</button>
+</form>
+
+</div> 
+</div>
+
+<script src="script.js"></script> 
+</body> 
+</html> 
