@@ -12,12 +12,16 @@ function loadProducts() {
 
             data.forEach(product => {
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = 'col-md-4 mb-3'; // Используем Bootstrap классы для сетки
                 card.innerHTML = `
-                    <h3>${product.name}</h3>
-                    <p>Количество: ${product.quantity}</p>
-                    <p>Цена: ${product.price} руб.</p>
-                    <button onclick='deleteProduct(${product.id})'>Удалить</button>`;
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text">Количество: ${product.quantity}</p>
+                            <p class="card-text">Цена: ${product.price} руб.</p>
+                            <button class="btn btn-danger" onclick='deleteProduct(${product.id})'>Удалить</button>
+                        </div>
+                    </div>`;
                 itemList.appendChild(card);
             });
         })
@@ -80,10 +84,14 @@ function loadSuppliers() {
 
             data.forEach(supplier => {
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = 'col-md-4 mb-3'; // Используем Bootstrap классы для сетки
                 card.innerHTML = `
-                    <h3>${supplier.name}</h3>
-                    <p>Контактная информация: ${supplier.contact_info}</p>`;
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">${supplier.name}</h5>
+                            <p class="card-text">Контактная информация: ${supplier.contact_info}</p>
+                        </div>
+                    </div>`;
                 supplierList.appendChild(card);
             });
         })
@@ -114,7 +122,33 @@ function addSupplier(event) {
     .catch(error => console.error('Ошибка при добавлении поставщика:', error));
 }
 
+// Загрузка поставщиков при загрузке страницы
+document.addEventListener('DOMContentLoaded', loadSuppliers);
+function addSupplier(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('supplierName').value;
+    const contactInfo = document.getElementById('supplierContactInfo').value;
+
+    fetch('/suppliers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, contact_info: contactInfo })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw new Error(err.error); });
+        }
+        return response.json();
+    })
+    .then(() => {
+        loadSuppliers();
+        document.getElementById('supplierForm').reset();
+    })
+    .catch(error => console.error('Ошибка при добавлении поставщика:', error));
+}
+
 // Загрузка поставщиков при загрузке страницы на соответствующей странице
-if (document.title === "Поставщики") {
+if (document.title === "Управление поставщиками") {
     document.addEventListener('DOMContentLoaded', loadSuppliers);
 }

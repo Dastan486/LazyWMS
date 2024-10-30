@@ -3,27 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Управление товарами и поставщиками</title>
+    <title>Управление поставщиками</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Управление товарами и поставщиками</h1>
-            <nav>
-                <ul>
-                    <li><a href="products.html">Товары</a></li>
-                    <li><a href="suppliers.html">Поставщики</a></li>
-                </ul>
-            </nav>
-        </header>
+<div class="container mt-5">
+    <header class="text-center mb-4">
+        <h1>Управление поставщиками</h1>
+        <nav class="nav justify-content-center">
+            <a class="nav-link" href="products.html">Товары</a>
+            <a class="nav-link active" href="#">Поставщики</a> <!-- ссылка на текущую страницу -->
+        </nav>
+    </header>
 
-        <div id="content">
-            <h2>Добро пожаловать!</h2>
-            <p>Выберите страницу для управления товарами или поставщиками.</p>
-        </div>
-    </div>
+    <div id="content">
+        <h2>Список поставщиков</h2>
+        <div id="supplierList" class="row"></div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+        <!-- Форма добавления поставщика -->
+        <h2 class="mt-4">Добавить поставщика</h2>
+        <form id="supplierForm" onsubmit="addSupplier(event)">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="supplierName">Название поставщика</label>
+                    <input type='text' class='form-control' id='supplierName' placeholder='Название поставщика' required />
+                </div>
+                <div class='form-group col-md-6'>
+                    <label for='supplierContactInfo'>Контактная информация</label>
+                    <input type='text' class='form-control' id='supplierContactInfo' placeholder='Контактная информация' required />
+                </div>
+            </div>
+            <button type='submit' class='btn btn-primary'>Добавить поставщика</button>
+        </form>
+
+    </div> 
+</div>
+
+<script src='script.js'></script> 
+</body> 
+</html> 
