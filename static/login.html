@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - LazyManager</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header class="bg-primary text-white text-center p-3">
+    <h1>Управление Складом</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">LazyManager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="products.html">Товары</a></li>
+                <li class="nav-item"><a class="nav-link" href="suppliers.html">Поставщики</a></li>
+                <li class="nav-item"><a class="nav-link" href="operations.html">Операции</a></li>
+                <li class="nav-item"><a class="nav-link" href="map.html">Карта Складов</a></li>
+                <li class="nav-item active"><a class="nav-link" href="#">Вход</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main class="container mt-4">
+    <h2>Вход в систему</h2>
+    <form id='loginForm' onsubmit='loginUser(event)'>
+        <div class='form-group'>
+            <label for='username'>Имя пользователя</label>
+            <input type='text' class='form-control' id='username' placeholder='Введите имя пользователя' required />
+        </div>
+        <div class='form-group'>
+            <label for='password'>Пароль</label>
+            <input type='password' class='form-control' id='password' placeholder='Введите пароль' required />
+        </div>
+        <button type='submit' class='btn btn-primary'>Войти</button>
+    </form>
+
+    <p class='mt-3'>Нет аккаунта? <a href='register.html'>Зарегистрируйтесь здесь</a>.</p>
+</main>
+
+<footer class='text-center mt-4'>
+    © 2024 Управление Складом - LazyManager. Все права защищены.
+</footer>
+
+<script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'></script> 
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script> 
+
+<script>
+// Пример функции для обработки входа
+function loginUser(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Логика аутентификации (например, отправка данных на сервер)
+    alert(`Вход выполнен для пользователя: ${username}`);
+}
+</script>
+
+</body>
+</html>

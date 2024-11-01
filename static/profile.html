@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Клиентский Профиль - LazyManager</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header class="bg-primary text-white text-center p-3">
+    <h1>Управление Складом</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">LazyManager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="products.html">Товары</a></li>
+                <li class="nav-item"><a class="nav-link" href="suppliers.html">Поставщики</a></li>
+                <li class="nav-item"><a class="nav-link" href="operations.html">Операции</a></li>
+                <li class="nav-item"><a class="nav-link" href="map.html">Карта Складов</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#">Профиль</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Вход</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main class="container mt-4">
+    <h2>Клиентский Профиль</h2>
+
+    <!-- Личная информация -->
+    <h3>Личная информация</h3>
+    <form id='profileForm' onsubmit='updateProfile(event)'>
+        <div class='form-group'>
+            <label for='fullName'>ФИО</label>
+            <input type='text' class='form-control' id='fullName' placeholder='Введите ваше ФИО' required />
+        </div>
+        <div class='form-group'>
+            <label for='email'>Электронная почта</label>
+            <input type='email' class='form-control' id='email' placeholder='Введите вашу почту' required />
+        </div>
+        <div class='form-group'>
+            <label for='phone'>Телефон</label>
+            <input type='tel' class='form-control' id='phone' placeholder='Введите ваш телефон' required />
+        </div>
+
+        <!-- Кнопка для сохранения изменений -->
+        <button type='submit' class='btn btn-primary'>Сохранить изменения</button>
+    </form>
+
+    <!-- Изменение пароля -->
+    <h3 class="mt-4">Изменить пароль</h3>
+    <form id='passwordForm' onsubmit='changePassword(event)'>
+        <div class='form-group'>
+            <label for='currentPassword'>Текущий пароль</label>
+            <input type='password' class='form-control' id='currentPassword' placeholder='Введите текущий пароль' required />
+        </div>
+        <div class='form-group'>
+            <label for='newPassword'>Новый пароль</label>
+            <input type='password' class='form-control' id='newPassword' placeholder='Введите новый пароль' required />
+        </div>
+        <button type='submit' class='btn btn-warning'>Изменить пароль</button>
+    </form>
+
+    <!-- Удаление аккаунта -->
+    <h3 class="mt-4 text-danger">Удаление аккаунта</h3>
+    <p>Если вы хотите удалить свой аккаунт, нажмите на кнопку ниже.</p>
+    <button onclick='deleteAccount()' class='btn btn-danger'>Удалить аккаунт</button>
+
+</main>
+
+<footer class='text-center mt-4'>
+    © 2024 Управление Складом - LazyManager. Все права защищены.
+</footer>
+
+<script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'></script> 
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script> 
+
+<script>
+// Пример функции для обновления профиля
+function updateProfile(event) {
+    event.preventDefault();
+    
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+
+    // Логика обновления профиля (например, отправка данных на сервер)
+    alert(`Профиль обновлен: ${fullName}, ${email}, ${phone}`);
+}
+
+// Пример функции для изменения пароля
+function changePassword(event) {
+    event.preventDefault();
+    
+    const currentPassword = document.getElementById('currentPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+
+    // Логика изменения пароля (например, отправка данных на сервер)
+    alert(`Пароль изменен для пользователя с текущим паролем: ${currentPassword}`);
+}
+
+// Пример функции для удаления аккаунта
+function deleteAccount() {
+    if (confirm("Вы уверены, что хотите удалить свой аккаунт? Это действие необратимо.")) {
+        // Логика удаления аккаунта (например, отправка запроса на сервер)
+        alert("Ваш аккаунт был удален.");
+    }
+}
+</script>
+
+</body>
+</html>
