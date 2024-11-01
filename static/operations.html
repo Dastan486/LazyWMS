@@ -5,16 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Управление операциями с товарами</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+        }
+        .transaction-card {
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            transition: transform 0.2s;
+        }
+        .transaction-card:hover {
+            transform: scale(1.02);
+        }
+    </style>
 </head>
 <body>
+
 <?php include 'header.html'; ?>
 
-<header class="text-center mb-4">
-    <h1>Управление операциями с товарами</h1>
+<header class="bg-primary text-white text-center p-3">
+    <h1>Управление Складом</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">LazyManager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="#">Товары</a></li>
+                <li class="nav-item"><a class="nav-link" href="suppliers.html">Поставщики</a></li>
+                <li class="nav-item"><a class="nav-link" href="operations.html">Операции</a></li>
+                <li class="nav-item"><a class="nav-link" href="map.html">Карта Складов</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Вход</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.html">Регистрация</a></li>
+            </ul>
+        </div>
+    </nav>
 </header>
 
-<div id="content">
-    <h2>Добавить операцию</h2>
+<main class="container mt-4">
+    <h1 class="text-center mb-4">Управление операциями с товарами</h1>
+    <h2>Список Операций</h2>
+    <div id='transactionList' class='row'>
+        <!-- Dynamic transaction cards will be inserted here -->
+    </div>
+
+    <!-- Форма добавления операции -->
+    <h2 class="mt-4">Добавить операцию</h2>
     <form id="transactionForm" onsubmit="addTransaction(event)">
         <div class="form-row">
             <div class="form-group col-md-4">
@@ -40,24 +85,136 @@
         <button type='submit' class='btn btn-primary'>Добавить операцию</button>
     </form>
 
-    <!-- Список операций -->
-    <h2 class="mt-4">Список операций</h2>
-    <table class="table table-bordered mt-3" id="transactionsTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>ID продукта</th>
-                <th>ID поставщика</th>
-                <th>Количество</th>
-                <th>Тип операции</th>
-                <th>Дата создания</th>
-            </tr>
-        </thead>
-        <tbody id="transactionsTableBody"></tbody>
-    </table>
+    <!-- Modal for adding/editing transactions -->
+    <div id="transactionModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавить/Редактировать Операцию</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="transactionFormModal">
+                        <div class="form-group">
+                            <label for="transactionProductId">ID продукта:</label>
+                            <input type="number" id="transactionProductId" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="transactionSupplierId">ID поставщика:</label>
+                            <input type="number" id="transactionSupplierId" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="transactionQuantity">Количество:</label>
+                            <input type="number" id="transactionQuantity" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="transactionType">Тип операции:</label>
+                            <select id="transactionType" class="form-control" required>
+                                <option value="incoming">Приход</option>
+                                <option value="outgoing">Расход</option>
+                            </select>
+                        </div>
+                        <input type='hidden' id='transactionId'/>
+                    </form>
+                </div>
+                <div class='modal-footer'>
+                    <button type='button' class='btn btn-primary' onclick='saveTransaction()'>Сохранить</button>
+                    <button type='button' class='btn btn-secondary' data-dismiss='modal'>Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
-</div>
+<footer class='text-center mt-4'>
+    © 2024 Управление Складом - LazyManager. Все права защищены.
+</footer>
 
-<?php include 'footer.html'; ?>
+<script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'></script> 
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script> 
+<script src='script.js'></script>
+
+<script>
+    function addTransaction(event) {
+        event.preventDefault();
+        
+        const productId = document.getElementById('product_id').value;
+        const supplierId = document.getElementById('supplier_id').value;
+        const quantity = document.getElementById('quantity').value;
+        const transactionType = document.getElementById('transaction_type').value;
+
+        const transactionList = document.getElementById('transactionList');
+        
+        const card = document.createElement('div');
+        card.className = 'col-md-4';
+        
+        card.innerHTML = `
+            <div class='transaction-card'>
+                <h5>Товар ID: ${productId}</h5>
+                <p>Поставщик ID: ${supplierId}</p>
+                <p>Количество: ${quantity}</p>
+                <p>Тип операции: ${transactionType}</p>
+                <button onclick='editTransaction(this)' data-product-id="${productId}" data-supplier-id="${supplierId}" data-quantity="${quantity}" data-transaction-type="${transactionType}" class='btn btn-warning'>Редактировать</button> 
+                <button onclick='deleteTransaction(this)' class='btn btn-danger'>Удалить</button> 
+            </div>`;
+        
+        transactionList.appendChild(card);
+        
+        // Clear form fields
+        document.getElementById('transactionForm').reset();
+    }
+
+    function editTransaction(button) {
+       // Logic to edit transaction
+       const productId = button.getAttribute('data-product-id');
+       const supplierId = button.getAttribute('data-supplier-id');
+       const quantity = button.getAttribute('data-quantity');
+       const transactionType = button.getAttribute('data-transaction-type');
+
+       document.getElementById('transactionProductId').value = productId;
+       document.getElementById('transactionSupplierId').value = supplierId;
+       document.getElementById('transactionQuantity').value = quantity;
+       document.getElementById('transactionType').value = transactionType;
+
+       $('#transactionModal').modal('show');
+    }
+
+    function deleteTransaction(button) {
+       // Logic to delete transaction
+       button.parentNode.parentNode.remove();
+    }
+
+    function saveTransaction() {
+        const productId = document.getElementById('transactionProductId').value;
+        const supplierId = document.getElementById('transactionSupplierId').value;
+        const quantity = document.getElementById('transactionQuantity').value;
+        const transactionType = document.getElementById('transactionType').value;
+
+        // Find the transaction card to update
+        const transactionCards = document.querySelectorAll('.transaction-card');
+        let updated = false;
+        transactionCards.forEach(card => {
+            if (card.querySelector('h5').textContent.includes(productId) &&
+                card.querySelector('p:nth-child(2)').textContent.includes(supplierId) &&
+                card.querySelector('p:nth-child(3)').textContent.includes(quantity)) {
+                card.querySelector('h5').textContent = `Товар ID: ${productId}`;
+                card.querySelector('p:nth-child(2)').textContent = `Поставщик ID: ${supplierId}`;
+                card.querySelector('p:nth-child(3)').textContent = `Количество: ${quantity}`;
+                card.querySelector('p:nth-child(4)').textContent = `Тип операции: ${transactionType}`;
+                updated = true;
+            }
+        });
+
+        if (!updated) {
+            addTransaction({ preventDefault: () => {} });
+        }
+
+        $('#transactionModal').modal('hide');
+    }
+</script>
+
 </body>
 </html>
