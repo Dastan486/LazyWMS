@@ -1,7 +1,39 @@
 body {
-    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .card {
     margin-bottom: 20px;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #007bff;
+}
+
+footer {
+    background-color: #f9f9f9;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+
+footer p {
+    margin-bottom: 0;
 }

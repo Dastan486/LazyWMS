@@ -24,6 +24,7 @@ go.work.sum
 # env file
 .env
 bin
+log.txt
 #--------------------------------------------------#
 # The following was generated with gitignore.nvim: #
 #--------------------------------------------------#

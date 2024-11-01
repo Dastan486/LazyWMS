@@ -3,43 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Управление поставщиками</title>
+    <title>Управление Складом - LazyManager</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .header {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+        }
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
-    <header class="text-center mb-4">
-        <h1>Управление поставщиками</h1>
-        <nav class="nav justify-content-center">
-            <a class="nav-link" href="products.html">Товары</a>
-            <a class="nav-link active" href="#">Поставщики</a> <!-- ссылка на текущую страницу -->
-        </nav>
-    </header>
 
-    <div id="content">
-        <h2>Список поставщиков</h2>
-        <div id="supplierList" class="row"></div>
+<header class="header text-center mb-4">
+    <h1>Управление Складом</h1>
+    <p class="lead">Управляйте своими товарами и поставщиками с легкостью!</p>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">LazyManager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="products.html">Товары</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="suppliers.html">Поставщики</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="operations.html">Операции</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="map.html">Карта Складов</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Вход</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="register.html">Регистрация</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
 
-        <!-- Форма добавления поставщика -->
-        <h2 class="mt-4">Добавить поставщика</h2>
-        <form id="supplierForm" onsubmit="addSupplier(event)">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="supplierName">Название поставщика</label>
-                    <input type='text' class='form-control' id='supplierName' placeholder='Название поставщика' required />
-                </div>
-                <div class='form-group col-md-6'>
-                    <label for='supplierContactInfo'>Контактная информация</label>
-                    <input type='text' class='form-control' id='supplierContactInfo' placeholder='Контактная информация' required />
+<main class="container mt-4">
+    <h2 class="text-center mb-4">Добро пожаловать в систему управления складом!</h2>
+    <p>Здесь вы можете управлять своими товарами и поставщиками.</p>
+
+    <h2 class="text-center mb-4">Основные функции</h2>
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Управление товарами</h5>
+                    <p class="card-text">Добавляйте, редактируйте и удаляйте товары.</p>
+                    <a href="products.html" class="btn btn-primary">Перейти к товарам</a>
                 </div>
             </div>
-            <button type='submit' class='btn btn-primary'>Добавить поставщика</button>
-        </form>
+        </div>
 
-    </div> 
-</div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Управление поставщиками</h5>
+                    <p class="card-text">Добавляйте и управляйте вашими поставщиками.</p>
+                    <a href="suppliers.html" class="btn btn-primary">Перейти к поставщикам</a>
+                </div>
+            </div>
+        </div>
 
-<script src='script.js'></script> 
-</body> 
-</html> 
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Управление операциями</h5>
+                    <p class="card-text">Отслеживайте приход и расход товаров.</p>
+                    <a href="operations.html" class="btn btn-primary">Перейти к операциям</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer class="text-center mt-4 bg-dark text-white p-3">
+    © 2024 Управление Складом - LazyManager. Все права защищены.
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src='script.js'></script> <!-- Ваши пользовательские скрипты -->
+<script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
+
+</body>
+</html>

@@ -21,6 +21,7 @@ func main() {
 	// Настройка маршрутов
 	handlers.SetupProductRoutes(r, database)
 	handlers.SetupSupplierRoutes(r, database)
+	handlers.SetupInventoryTransaction(r, database)
 
 	// Запуск сервера на порту 8080
 	log.Println("Serving on :8080")
