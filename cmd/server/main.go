@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/Dastan486/LazyManager/internal/db"
-	"github.com/Dastan486/LazyManager/internal/handlers"
+	"github.com/Dastan486/LazyWMS/internal/db"
+	"github.com/Dastan486/LazyWMS/internal/handlers"
 	"github.com/gin-gonic/gin"
 	"log"
 )
@@ -15,6 +15,8 @@ func main() {
 
 	r := gin.Default()
 
+	r.LoadHTMLGlob("templates/*")
+
 	// Обслуживать статические файлы из каталога ./static
 	r.Static("/static", "./static")
 
@@ -22,6 +24,7 @@ func main() {
 	handlers.SetupProductRoutes(r, database)
 	handlers.SetupSupplierRoutes(r, database)
 	handlers.SetupInventoryTransaction(r, database)
+	handlers.SetupUserRoutes(r, database)
 
 	// Запуск сервера на порту 8080
 	log.Println("Serving on :8080")

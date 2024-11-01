@@ -1,4 +1,4 @@
-module github.com/Dastan486/LazyManager
+module github.com/Dastan486/LazyWMS
 
 go 1.23.2
 

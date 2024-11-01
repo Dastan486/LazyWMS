@@ -3,61 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Управление Складом - LazyManager</title>
+    <title>LazyWMS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> <!-- Updated link -->
     <style>
         body {
             background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure body takes up at least full viewport height */
+            margin: 0; /* Remove default margin */
         }
         .header {
             background-color: #343a40;
             color: white;
             padding: 20px 0;
         }
+        main {
+            flex: 1; /* Allow main content to grow and fill space */
+        }
         .card {
-            transition: transform 0.2s;
+            transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+            border-radius: 10px; /* Rounded corners for cards */
+            overflow: hidden; /* Prevent overflow from child elements */
         }
         .card:hover {
-            transform: scale(1.05);
+            transform: translateY(-10px); /* Lift effect on hover */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
         }
         footer {
             background-color: #343a40;
             color: white;
             padding: 10px 0;
+            text-align: center; /* Center align footer text */
         }
     </style>
 </head>
 <body>
 
 <header class="header text-center mb-4">
-    <h1>Управление Складом</h1>
-    <p class="lead">Управляйте своими товарами и поставщиками с легкостью!</p>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">LazyManager</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="products.html">Товары</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="suppliers.html">Поставщики</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="operations.html">Операции</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="map.html">Карта Складов</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">Вход</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="register.html">Регистрация</a>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="products.html">Товары</a></li>
+                <li class="nav-item"><a class="nav-link" href="suppliers.html">Поставщики</a></li>
+                <li class="nav-item"><a class="nav-link" href="operations.html">Операции</a></li>
+                <li class="nav-item"><a class="nav-link" href="map.html">Карта Складов</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login">Вход</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register">Регистрация</a></li>
             </ul>
         </div>
     </nav>
@@ -73,7 +70,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Управление товарами</h5>
                     <p class="card-text">Добавляйте, редактируйте и удаляйте товары.</p>
-                    <a href="products.html" class="btn btn-primary">Перейти к товарам</a>
+                    <a href="/products" class="btn btn-primary">Перейти к товарам</a>
                 </div>
             </div>
         </div>
@@ -83,7 +80,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Управление поставщиками</h5>
                     <p class="card-text">Добавляйте и управляйте вашими поставщиками.</p>
-                    <a href="suppliers.html" class="btn btn-primary">Перейти к поставщикам</a>
+                    <a href="/suppliers" class="btn btn-primary">Перейти к поставщикам</a>
                 </div>
             </div>
         </div>
@@ -93,7 +90,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Управление операциями</h5>
                     <p class="card-text">Отслеживайте приход и расход товаров.</p>
-                    <a href="operations.html" class="btn btn-primary">Перейти к операциям</a>
+                    <a href="/operations" class="btn btn-primary">Перейти к операциям</a>
                 </div>
             </div>
         </div>
@@ -101,13 +98,13 @@
 
 </main>
 
-<footer class="text-center mt-4 bg-dark text-white p-3">
+<footer class='text-center mt-4'>
     © 2024 Управление Складом - LazyManager. Все права защищены.
 </footer>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src='script.js'></script> <!-- Ваши пользовательские скрипты -->
-<script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'></script>
+<script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script> 
+<script src='/static/script.js'></script> <!-- Ваши пользовательские скрипты -->
+<script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'></script> 
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 
 </body>

@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/Dastan486/LazyManager/internal/models" // Импорт моделей
+	"github.com/Dastan486/LazyWMS/internal/models" // Импорт моделей
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -76,4 +76,3 @@ func deleteProduct(db *gorm.DB) gin.HandlerFunc {
 		c.JSON(204, nil) // No content response
 	}
 }
-

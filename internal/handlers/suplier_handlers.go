@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/Dastan486/LazyManager/internal/models"
+	"github.com/Dastan486/LazyWMS/internal/models"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )

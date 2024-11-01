@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/Dastan486/LazyManager/internal/models" // Импорт моделей
+	"github.com/Dastan486/LazyWMS/internal/models" // Импорт моделей
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"

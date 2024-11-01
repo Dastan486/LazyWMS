@@ -1,39 +1,28 @@
+html, body {
+    height: 100%; /* Задает высоту 100% для html и body */
+    margin: 0; /* Убирает отступы по умолчанию */
+    padding: 0; /* Убирает внутренние отступы по умолчанию */
+}
+
 body {
-    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column; /* Устанавливает направление элементов в колонку */
+    min-height: 100vh; /* Обеспечивает, что body занимает как минимум полную высоту окна */
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
+main {
+    flex: 1; /* Позволяет основному контенту расти и занимать оставшееся пространство */
 }
 
-.card {
-    margin-bottom: 20px;
-}
-
-.card-body {
-    padding: 1.25rem;
-}
-
-.navbar-brand {
-    font-weight: bold;
-}
-
-.navbar-nav .nav-link {
-    color: #333;
-    transition: color 0.2s ease;
-}
-
-.navbar-nav .nav-link:hover {
-    color: #007bff;
+*,
+*::before,
+*::after {
+    box-sizing: border-box; /* Устанавливает box-sizing для всех элементов */
 }
 
 footer {
-    background-color: #f9f9f9;
-    padding: 10px 0;
-    border-top: 1px solid #ddd;
-}
-
-footer p {
-    margin-bottom: 0;
+    background-color: #343a40; /* Цвет фона футера */
+    color: white; /* Цвет текста футера */
+    padding: 10px 0; /* Отступы сверху и снизу */
+    text-align: center; /* Выравнивание текста по центру */
 }
