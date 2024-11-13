@@ -11,3 +11,8 @@ type InventoryTransaction struct {
 	TransactionType string    `json:"transaction_type"` // "incoming" или "outgoing"
 	CreatedAt       time.Time `json:"created_at"`
 }
+type ProductSupplierID struct {
+	ID         uint `json:"id" gorm:"primaryKey"`
+	ProductID  uint `json:"product_id"`
+	SupplierID uint `json:"supplier_id"`
+}

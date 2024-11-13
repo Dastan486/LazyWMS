@@ -23,6 +23,7 @@ func InitDB() *gorm.DB {
 }
 
 func AutoMigrate(db *gorm.DB) {
-	db.AutoMigrate(&models.Product{}, &models.Supplier{}) // Используйте модели
-	db.AutoMigrate(&models.InventoryTransaction{}, &models.ProductSupplier{})
+	db.AutoMigrate(&models.Product{}, &models.Supplier{})
+	db.AutoMigrate(&models.InventoryTransaction{}, &models.ProductSupplierID{})
+	db.AutoMigrate(&models.User{})
 }

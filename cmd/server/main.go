@@ -20,11 +20,12 @@ func main() {
 	// Обслуживать статические файлы из каталога ./static
 	r.Static("/static", "./static")
 
+	authC := &handlers.AuthController{DB: database}
 	// Настройка маршрутов
 	handlers.SetupProductRoutes(r, database)
 	handlers.SetupSupplierRoutes(r, database)
 	handlers.SetupInventoryTransaction(r, database)
-	handlers.SetupUserRoutes(r, database)
+	handlers.SetupUserRoutes(authC, r, database)
 
 	// Запуск сервера на порту 8080
 	log.Println("Serving on :8080")
