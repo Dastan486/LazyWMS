@@ -20,8 +20,13 @@ func SetupUserRoutes(authC *AuthController, r *gin.Engine, db *gorm.DB) {
 		c.JSON(http.StatusOK, gin.H{"message": "This is a protected route!"})
 	})
 
-}
+	r.GET("/profile", getProfile)
 
+}
+func getProfile(c *gin.Context) {
+
+	c.HTML(http.StatusOK, "profile.html", nil)
+}
 func getLogin(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "login.html", nil)
