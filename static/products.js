@@ -1,3 +1,5 @@
+// products.js
+
 function loadProducts() {
   fetch('/products')
     .then(response => {
@@ -12,15 +14,16 @@ function loadProducts() {
 
       data.forEach(product => {
         const card = document.createElement('div');
-        card.className = 'col-md-4 mb-3';
+        card.className = 'col-md-4 mb-3'; // Используем Bootstrap классы для сетки
         card.innerHTML = `
                     <div class="card">
                         <div class="card-body">
-                            <h5>${product.name}</h5>
-                            <p>Количество: ${product.quantity}</p>
-                            <p>Цена: ${product.price} руб.</p>
-                            <button onclick='deleteProduct(${product.id})' data-id="${product.id}"class='btn btn-danger'>Удалить</button> 
-                        </div>`;
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text">Количество: ${product.quantity}</p>
+                            <p class="card-text">Цена: ${product.price} руб.</p>
+                            <button class="btn btn-danger" onclick='deleteProduct(${product.id})'>Удалить</button>
+                        </div>
+                    </div>`;
         itemList.appendChild(card);
       });
     })
@@ -37,42 +40,34 @@ function addProduct(event) {
   fetch('/products', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, quantity: parseInt(quantity), price: parseFloat(price) })
+    body: JSON.stringify({ name, quantity: parseInt(quantity), price: parseFloat(price) }) // Преобразование типов
   })
-  .then(response => {
+    .then(response => {
       if (!response.ok) {
-          return response.json().then(err => { throw new Error(err.error); });
+        return response.json().then(err => { throw new Error(err.error); });
       }
       return response.json();
-  })
-  .then(() => {
+    })
+    .then(() => {
       loadProducts();
       document.getElementById('itemForm').reset();
-  })
-  .catch(error => console.error('Ошибка при добавлении товара:', error));
+    })
+    .catch(error => console.error('Ошибка при добавлении товара:', error));
 }
 
 // Удаление продукта по ID
-function deleteProduct(button) {
-    // Find the closest card element to the button clicked
-    const productCard = button.closest('.card'); // Use closest to find the nearest card
-    if (productCard) {
-        const productId = button.getAttribute('data-id'); // Get the product ID from data attribute
-
-        // Make a DELETE request to the server
-        fetch(`/products/${productId}`, { method: 'DELETE' })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Ошибка при удалении товара');
-                }
-                return response.json(); // Optional, depending on your server response
-            })
-            .then(() => {
-                // Remove the product card from the DOM
-                productCard.remove();
-            })
-            .catch(error => console.error('Ошибка при удалении товара:', error));
-    } else {
-        console.error('Product card not found');
-    }
+function deleteProduct(id) {
+  fetch(`/products/${id}`, { method: 'DELETE' })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Ошибка при удалении товара');
+      }
+      return response.json();
+    })
+    .then(() => loadProducts())
+    .catch(error => console.error('Ошибка при удалении товара:', error));
 }
+
+// Загрузка продуктов при загрузке страницы
+document.addEventListener('DOMContentLoaded', loadProducts);
+

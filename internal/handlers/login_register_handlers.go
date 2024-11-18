@@ -56,12 +56,23 @@ func (ctrl *AuthController) Register(c *gin.Context) {
 	}
 	user.Password = hashedPassword
 
+	// Check if the email already exists
+	var existingUser models.User
+	if err := ctrl.DB.Where("email = ?", user.Email).First(&existingUser).Error; err == nil {
+		c.JSON(http.StatusConflict, gin.H{"error": "Email already in use"})
+		return
+	} else if err != gorm.ErrRecordNotFound {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
+		return
+	}
+
+	// Create the user if the email does not exist
 	if err := ctrl.DB.Create(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "User registration failed"})
 		return
 	}
 
-	// Генерация токена после успешной регистрации
+	// Generate token after successful registration
 	token, err := GenerateToken(user.ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
@@ -70,30 +81,28 @@ func (ctrl *AuthController) Register(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "User registered successfully", "token": token})
 }
-
-// Login обрабатывает вход пользователя и генерирует токен
 func (ctrl *AuthController) Login(c *gin.Context) {
 	var user models.User
-	var input models.User // Структура для входа (логин и пароль)
+	var input models.User // Structure for login (email and password)
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// Поиск пользователя по email
+	// Find the user by email
 	if err := ctrl.DB.Where("email = ?", input.Email).First(&user).Error; err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 		return
 	}
 
-	// Сравнение паролей
+	// Compare passwords
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password)); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 		return
 	}
 
-	// Генерация токена после успешного входа
+	// Generate token after successful login
 	token, err := GenerateToken(user.ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})

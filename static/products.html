@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Управление Товарами</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> <!-- Updated link -->
 </head>
 <body>
 
@@ -18,10 +18,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="#">Товары</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Поставщики</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Заказы</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Отслеживание перемещений</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Карта Складов</a></li>
+                <li class="nav-item"><a class="nav-link" href="suppliers.html">Поставщики</a></li>
+                <li class="nav-item"><a class="nav-link" href="operations.html">Операции</a></li>
+                <li class="nav-item"><a class="nav-link" href="map.html">Карта Складов</a></li>
                 <li class="nav-item"><a class="nav-link" href="/login">Вход</a></li>
                 <li class="nav-item"><a class="nav-link" href="/register">Регистрация</a></li>
             </ul>
@@ -55,7 +54,7 @@
         <button type='submit' class='btn btn-primary'>Добавить товар</button>
     </form>
 
-    <!-- Модальное окно для добавления/редактирования товара -->
+    <!-- Modal for adding/editing products -->
     <div id="productModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -72,10 +71,6 @@
                             <input type="text" id="productName" class="form-control" required />
                         </div>
                         <div class="form-group">
-                            <label for="productQuantity">Количество:</label>
-                            <input type="number" id="productQuantityEdit" class="form-control" required />
-                        </div>
-                        <div class="form-group">
                             <label for="productPrice">Цена:</label>
                             <input type="number" id="productPriceEdit" step='0.01' class="form-control" required />
                         </div>
@@ -90,8 +85,20 @@
         </div>
     </div>
 
-    <!-- Отслеживание перемещений -->
-    <!-- Здесь можно добавить функционал для отслеживания перемещений товаров -->
+    <!-- Additional Functionalities Section -->
+    <h2>Дополнительные Функции</h2>
+
+    **Управление товарными запасами**
+    - Отслеживание текущих запасов товаров.
+    
+    **Отслеживание движения товаров**
+    - Запись всех операций по движению товаров на складе.
+
+    **Генерация отчетов**
+    - Создание отчетов по операциям с возможностью экспорта в Excel или PDF.
+
+    **Интеграция с другими системами учета**
+    - Подключение к внешним системам для обмена данными о запасах и продажах.
 
 </main>
 
@@ -105,7 +112,7 @@
 <script src='products.js'></script>
 
 <script>
-// Функция для динамического добавления карточек товаров
+// Sample function to dynamically add product cards
 function addProduct(event) {
     event.preventDefault();
     
@@ -116,52 +123,53 @@ function addProduct(event) {
     const itemList = document.getElementById('itemList');
     
     const card = document.createElement('div');
-    card.className = 'col-md-4 mb-3';
+    card.className = 'col-md-4';
     
     card.innerHTML = `
-        <div class='card'>
-            <div class='card-body'>
-                <h5>${itemName}</h5>
-                <p>Количество: ${itemQuantity}</p>
-                <p>Цена: ${itemPrice} руб.</p>
-                <button onclick='editProduct(this)' data-name="${itemName}" data-price="${itemPrice}" data-quantity="${itemQuantity}" data-id="${Date.now()}" class='btn btn-warning'>Редактировать</button> 
-                <button onclick='deleteProduct(this)' data-id="${Date.now()}" class='btn btn-danger'>Удалить</button> 
-            </div>`;
+        <div class='product-card'>
+            <h5>${itemName}</h5>
+            <p>Количество: ${itemQuantity}</p>
+            <p>Цена: ${itemPrice} руб.</p>
+            <button onclick='editProduct(this)' data-name="${itemName}" data-price="${itemPrice}" data-quantity="${itemQuantity}" class='btn btn-warning'>Редактировать</button> 
+            <button onclick='deleteProduct(this)' class='btn btn-danger'>Удалить</button> 
+        </div>`;
     
     itemList.appendChild(card);
     
-    // Очистка полей формы
+    // Clear form fields
     document.getElementById('itemForm').reset();
 }
 
 function editProduct(button) {
-   const productCard = button.parentNode;
-   const productName = productCard.querySelector('h5').innerText;
-   const productQuantity = productCard.querySelector('p:nth-of-type(1)').innerText.split(': ')[1];
-   const productPrice = productCard.querySelector('p:nth-of-type(2)').innerText.split(': ')[1].replace(' руб.', '');
+   const productCard = button.parentElement;
+   const productName = button.getAttribute('data-name');
+   const productPrice = button.getAttribute('data-price');
+   const productQuantity = button.getAttribute('data-quantity');
 
    document.getElementById('productName').value = productName;
-   document.getElementById('productQuantityEdit').value = productQuantity;
    document.getElementById('productPriceEdit').value = productPrice;
+   document.getElementById('productId').value = productCard.dataset.id; // Assuming you set this attribute
 
-   $('#productModal').modal('show');
-}
-
-function deleteProduct(button) {
-   const productCard = button.parentNode.parentNode.parentNode; // Adjust to get the card element
-   productCard.remove();
+   $('#productModal').modal('show'); // Show the modal
 }
 
 function saveProduct() {
-   // Логика сохранения измененного товара
-   $('#productModal').modal('hide');
+   const productId = document.getElementById('productId').value;
+   const updatedName = document.getElementById('productName').value;
+   const updatedPrice = document.getElementById('productPriceEdit').value;
+
+   // Logic to update the product card based on productId
+   // Find the card and update its content
+
+   $('#productModal').modal('hide'); // Hide the modal after saving
 }
 
-// Загрузка продуктов при загрузке страницы
-document.addEventListener('DOMContentLoaded', loadProducts);
+function deleteProduct(button) {
+   const productCard = button.parentElement;
+   productCard.remove(); // Remove the card from the DOM
+}
 </script>
 
 </body>
+
 </html>
-
-
