@@ -4,7 +4,6 @@ import (
 	"github.com/Dastan486/LazyWMS/internal/models" // Импорт моделей
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-
 	"log"
 )
 
@@ -13,7 +12,7 @@ var database *gorm.DB
 func InitDB() *gorm.DB {
 	var err error
 
-	database, err = gorm.Open(sqlite.Open("lazy.db"), &gorm.Config{})
+	database, err = gorm.Open(sqlite.Open("tms.db"), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
 		return nil
@@ -23,7 +22,15 @@ func InitDB() *gorm.DB {
 }
 
 func AutoMigrate(db *gorm.DB) {
-	db.AutoMigrate(&models.Product{}, &models.Supplier{})
-	db.AutoMigrate(&models.InventoryTransaction{}, &models.ProductSupplierID{})
-	db.AutoMigrate(&models.User{})
+	err := db.AutoMigrate(
+		&models.Employees{},
+		&models.Clients{},
+		&models.Order_employees{},
+		&models.Orders{},
+		&models.Routes{},
+		&models.Vehicles{},
+	)
+	if err != nil {
+		log.Fatalf("failed: %v", err)
+	}
 }

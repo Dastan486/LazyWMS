@@ -16,24 +16,24 @@ func SetupInventoryTransaction(r *gin.Engine, db *gorm.DB) {
 // Обработчик для создания операции с товаром
 func createInventoryTransaction(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var transaction models.InventoryTransaction
-		if err := c.ShouldBindJSON(&transaction); err != nil {
+		var employees models.Employees
+		if err := c.ShouldBindJSON(&employees); err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
 
 		// Здесь можно добавить логику проверки существования продукта и поставщика
 
-		db.Create(&transaction)
-		c.JSON(201, transaction)
+		db.Create(&employees)
+		c.JSON(201, employees)
 	}
 }
 
 // Обработчик для получения всех операций с товарами
 func getInventoryTransactions(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var transactions []models.InventoryTransaction
-		db.Find(&transactions)
-		c.JSON(200, transactions)
+		var employees []models.Employees
+		db.Find(&employees)
+		c.JSON(200, employees)
 	}
 }

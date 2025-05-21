@@ -7,18 +7,18 @@ import (
 )
 
 // Настройка маршрутов для продуктов
-func SetupProductRoutes(r *gin.Engine, db *gorm.DB) {
-	r.POST("/products", createProduct(db))
-	r.GET("/products", getProducts(db))
-	r.GET("/products/:id", getProduct(db))
-	r.PUT("/products/:id", updateProduct(db))
-	r.DELETE("/products/:id", deleteProduct(db))
+func SetupOrderRoutes(r *gin.Engine, db *gorm.DB) {
+	r.POST("/orders", CreateOrder(db))
+	r.GET("/orders", GetOrders(db))
+	r.GET("/orders/:id", GetOrdersID(db))
+	r.PUT("/orders/:id", UpdateOrders(db))
+	r.DELETE("/orders/:id", DeleteOrder(db))
 }
 
 // Определите функции createProduct, getProducts и т.д.
-func createProduct(db *gorm.DB) gin.HandlerFunc {
+func CreateOrder(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var product models.Product
+		var product models.Orders
 		if err := c.ShouldBindJSON(&product); err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
@@ -29,47 +29,47 @@ func createProduct(db *gorm.DB) gin.HandlerFunc {
 }
 
 // Обработчик для получения всех продуктов
-func getProducts(db *gorm.DB) gin.HandlerFunc {
+func GetOrders(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var products []models.Product
-		db.Find(&products)
-		c.JSON(200, products)
+		var orders []models.Orders
+		db.Find(&orders)
+		c.JSON(200, orders)
 	}
 }
 
 // Обработчик для получения продукта по ID
-func getProduct(db *gorm.DB) gin.HandlerFunc {
+func GetOrdersID(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var product models.Product
-		if err := db.First(&product, c.Param("id")).Error; err != nil {
+		var order models.Orders
+		if err := db.First(&order, c.Param("id")).Error; err != nil {
 			c.JSON(404, gin.H{"error": "Product not found"})
 			return
 		}
-		c.JSON(200, product)
+		c.JSON(200, order)
 	}
 }
 
 // Обработчик для обновления продукта
-func updateProduct(db *gorm.DB) gin.HandlerFunc {
+func UpdateOrders(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var product models.Product
-		if err := db.First(&product, c.Param("id")).Error; err != nil {
+		var orders models.Orders
+		if err := db.First(&orders, c.Param("id")).Error; err != nil {
 			c.JSON(404, gin.H{"error": "Product not found"})
 			return
 		}
-		if err := c.ShouldBindJSON(&product); err != nil {
+		if err := c.ShouldBindJSON(&orders); err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
-		db.Save(&product)
-		c.JSON(200, product)
+		db.Save(&orders)
+		c.JSON(200, orders)
 	}
 }
 
 // Обработчик для удаления продукта
-func deleteProduct(db *gorm.DB) gin.HandlerFunc {
+func DeleteOrder(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if err := db.Delete(&models.Product{}, c.Param("id")).Error; err != nil {
+		if err := db.Delete(&models.Orders{}, c.Param("id")).Error; err != nil {
 			c.JSON(404, gin.H{"error": "Product not found"})
 			return
 		}
